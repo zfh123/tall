@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        html,body{height: 100%;width: 100%;
+            overflow: hidden;}
+        *{margin: 0;
+            padding:0;}
+        ul,ol{list-style: none}
+        #box{
+            height: 454px;
+            width: 730px;
+            position: relative;
+            margin: 100px auto;
+        }
+        #box .bb{
+            height: 454px;
+            width: 720px;
+        }
+        #box .bb li{
+            height: 454px;
+            width: 720px;
+            position: absolute;
+            float: left;
+        }
+        .left{
+            height: 40px;
+            width: 40px;
+            background: #FF0000;
+            position: absolute;
+            left: 10px;
+            top: 45%;
+        }
+        .right{
+            height: 40px;
+            width: 40px;
+            background: #FF0000;
+            position: absolute;
+            right: 10px;
+            top: 45%;
+        }
+
+        .sb{
+            position: absolute;
+            background: greenyellow;
+            bottom: 10%;
+            left:40%;
+            height: 30px;
+            width: 150px;
+            padding-left: 30px;
+        }
+        .sb li{
+            float: left;
+            height: 10px;
+            width: 10px;
+
+            border: 1px solid #333333;
+            border-radius: 50%;
+            margin: 10px 5px;
+        }
+        .on{
+            background: #FF0000;
+        }
+    </style>
+    <script src="jquery-1.12.4.min.js"></script>
+</head>
+<body>
+<div id="box">
+    <ul class="bb">
+
+        <li><img src="img/02.jpg"></li>
+        <li><img src="img/o3.jpg"></li>
+        <li><img src="img/04.jpg"></li>
+        <li><img src="img/05.jpg"></li>
+        <li><img src="img/06.jpg"></li>
+        <li><img src="img/01.jpg"></li>
+    </ul>
+    <a class="left" href="javascript:void(0)"></a>
+    <a class="right" href="javascript:void(0)"></a>
+    <ul class="sb">
+        <li class="on"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+<script>
+    var $li=$(".bb li");
+    var $hz=$(".sb li");
+    //alert($li.length)
+    var index=-1;
+    var nowindex=0;
+    var timer=null;
+    function move(){
+        index++;
+            if(index>5){
+                index=0
+            }
+            console.log(index)
+        nowindex=index;
+            $li.eq(index).fadeIn().siblings().fadeOut()
+            $hz.eq(index).addClass("on").siblings().removeClass("on")
+
+    }
+   timer= setInterval(move,1000);
+
+    $("#box").hover(function(){
+        clearInterval(timer)
+    },function(){
+        timer= setInterval(move,1000)
+    });
+$(".left").click(function(){
+    clearInterval(timer);
+    nowindex--;
+    if(nowindex<0){
+        nowindex=5
+    }
+    console.log(nowindex)
+    $li.eq(nowindex).fadeIn().siblings().fadeOut();
+    $hz.eq(nowindex).addClass("on").siblings().removeClass("on")
+    index=nowindex;
+
+
+});
+    $(".right").click(function(){
+        clearInterval(timer);
+        nowindex++;
+        if(nowindex>5){
+            nowindex=0
+        }
+        console.log(nowindex)
+        $li.eq(nowindex).fadeIn().siblings().fadeOut();
+        $hz.eq(nowindex).addClass("on").siblings().removeClass("on")
+        index=nowindex;
+
+
+    });
+    $hz.click(function(){
+       // clearInterval(timer);
+        $(this).addClass("on").siblings().removeClass("on")
+        $li.eq($(this).index()).fadeIn().siblings().fadeOut();
+        index=$(this).index()
+    })
+</script>
+</body>
+</html>
